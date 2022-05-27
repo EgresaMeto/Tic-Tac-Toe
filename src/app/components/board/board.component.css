@@ -1,13 +1,15 @@
 .game-container
 {
-  background-color: aqua;
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.bg-board{
+  background-color: aqua;
 
+}
 .game-board{
   width: 60%;
   height: 70%;

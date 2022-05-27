@@ -14,10 +14,6 @@ export class PlayerService {
     name: 'Player 2',
     symbol: Symbol.CROSS,
   };
-  public playerPc = {
-    name: 'Pc',
-    symbol: Symbol.CROSS,
-  };
 
   public change(event: any, player: number) {
     if (player === 1) {
@@ -31,10 +27,7 @@ export class PlayerService {
     if (player === 0) {
       return this.playerOne.symbol;
     }
-    if (player === 1) {
       return this.playerTwo.symbol;
-    }
-    return this.playerPc.symbol;
   }
   constructor() {}
 }

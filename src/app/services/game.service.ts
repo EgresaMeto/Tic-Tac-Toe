@@ -6,22 +6,18 @@ import { GameStatus } from '../gameStatus';
 })
 export class GameService {
   public startGame: boolean;
-  public singlePlayer: boolean;
   public gameStatus: GameStatus;
   public firstPlayerTurn: boolean;
 
   constructor() {
     this.startGame = false;
-    this.singlePlayer = true;
     this.gameStatus = GameStatus.NotStarted;
     this.firstPlayerTurn = true;
   }
 
-  public setPlayerNumber = (value: boolean) => {
-    this.singlePlayer = value;
-  };
   public play() {
     this.startGame = !this.startGame;
+    this.gameStatus = GameStatus.InProgres
   }
 
   public changePlayer(){
@@ -29,5 +25,9 @@ export class GameService {
   }
   public setFirstPlayerTurn(value: boolean){
     this.firstPlayerTurn = value
+  }
+
+  public handleWinnerGame(value: GameStatus) {
+    this.gameStatus = value;
   }
 }

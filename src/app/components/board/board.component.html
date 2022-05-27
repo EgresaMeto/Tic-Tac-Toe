@@ -1,20 +1,26 @@
-<div *ngIf="gameService.startGame" >
-  <div>
-    Player turn: {{gameService.firstPlayerTurn ? playerService.playerOne.name : !gameService.singlePlayer ? playerService.playerTwo.name : playerService.playerPc.name }}
+<div *ngIf="gameService.startGame" class="bg-board" >
+  <div class="text-center text-2xl mb-8 pt-8">
+    Player turn: {{gameService.firstPlayerTurn ? playerService.playerOne.name : playerService.playerTwo.name}}
   </div>
-  <button (click)="boardService.resetGame()">Reset Game</button>
-  <div  class="game-container" >
-    <div class="text-red-500 w-full text-center">
-      {{playerService.playerOne.name}}
+  <div class="flex flex-row-reverse justify-around align-middle">
+    <button class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" (click)="boardService.resetGame()">Reset Game</button>
+    <div>
+     Game Status: {{gameService.gameStatus}}
     </div>
-  <div class="game-board w-full">
-    <div *ngFor="let square of boardService.board[0];let i =index"  class="square" (click)="boardService.clickCell(0,i)">{{square}}</div>
-  <div *ngFor="let square of boardService.board[1];let i =index"  class="square" (click)="boardService.clickCell(1,i)">{{square}}</div>
-  <div *ngFor="let square of boardService.board[2];let i =index"  class="square" (click)="boardService.clickCell(2,i)">{{square}}</div>
+  </div>
+  <div  class="flex" >
+    <div class="game-container">
+      <div class="game-board w-full">
+        <div *ngFor="let square of boardService.board[0];let i =index"  class="square" (click)="boardService.clickCell(0,i)">{{square}}</div>
+      <div *ngFor="let square of boardService.board[1];let i =index"  class="square" (click)="boardService.clickCell(1,i)">{{square}}</div>
+      <div *ngFor="let square of boardService.board[2];let i =index"  class="square" (click)="boardService.clickCell(2,i)">{{square}}</div>
+        </div>
     </div>
-    <div class="w-full text-center">
-      {{!gameService.singlePlayer ? playerService.playerTwo.name : playerService.playerPc.name}}
+    <div class="mt-24 w-2/4">
+      <div>Click logs</div>
+      <div *ngFor="let item of boardService.movesLog; let i =index" class="cursor-pointer mt-2"  (click)="boardService.clickLog(i)" >{{item.description}}</div>
     </div>
+
     <div class="circle"></div>
     <div class="circle1"></div>
   </div>

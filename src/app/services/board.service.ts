@@ -1,42 +1,52 @@
 import { Injectable } from '@angular/core';
-import { Symbol } from '../gameStatus';
+import { GameStatus, Symbol } from '../gameStatus';
 import { GameService } from './game.service';
 import { PlayerService } from './player.service';
-
+import { ChangeDetectorRef } from '@angular/core';
+interface IMovesLog {
+  description: string,
+  board: any,
+  lastMove: boolean
+}
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class BoardService {
   public board = [
     [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
     [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
     [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
   ];
+
+  public movesLog: IMovesLog[] = [{description: "", board:[
+    [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+    [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+    [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+  ], lastMove: false}];
+
   constructor(
     public gameService: GameService,
-    public playerService: PlayerService
+    public playerService: PlayerService,
   ) {}
 
   public clickCell(row: number, index: number) {
+    if(this.gameService.gameStatus !== GameStatus.InProgres) return;
     if (this.gameService.firstPlayerTurn && this.board[row][index] === Symbol.EMPTY) {
       this.board[row][index] = this.playerService.playerOne.symbol;
       this.gameService.changePlayer();
+      this.populateLogs(this.playerService.playerOne.name, row, index, this.playerService.playerOne.symbol)
+      this.checkBoardForWinner(this.board);
       return;
     }
-     if (
-       this.gameService.singlePlayer &&
-       this.board[row][index] === Symbol.EMPTY
-     ) {
-       this.board[row][index] = this.playerService.playerPc.symbol;
-       this.gameService.changePlayer();
-       return;
-     }
+    
      if(this.board[row][index] === Symbol.EMPTY){
        this.board[row][index] = this.playerService.playerTwo.symbol;
        this.gameService.changePlayer();
      }
-     let test = this.winner(this.board);
-     console.log(test, "----->");
+     this.populateLogs(this.playerService.playerTwo.name, row, index, this.playerService.playerTwo.symbol)
+     this.checkBoardForWinner(this.board);
   }
 
   public resetGame(){
@@ -46,11 +56,18 @@ export class BoardService {
       [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
     ];
     this.gameService.setFirstPlayerTurn(true)
+    this.gameService.handleWinnerGame(GameStatus.InProgres)
+    this.gameService.startGame = false;
+    this.movesLog = [{description: "", board:[
+      [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+      [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+      [Symbol.EMPTY, Symbol.EMPTY, Symbol.EMPTY],
+    ], lastMove: false}]
   }
 
-  public winner(x: Symbol[][]) {
+  public checkBoardForWinner(x: Symbol[][]) {
   let winners = new Set();
-
+debugger
   // columns check
   for (let i = 0; i < 3; i++) {
     if (x[0][i] !== Symbol.EMPTY && (new Set([x[0][i], x[1][i], x[2][i]])).size === 1) {
@@ -83,6 +100,46 @@ export class BoardService {
     return "incomplete";
   }
 
-  return winners.values().next().value;
+  let winnerVal = winners.values().next().value;
+  if(winnerVal === Symbol.CIRCLE){
+    this.gameService.handleWinnerGame(GameStatus.FirstPlayerWin)
+    this.movesLog = [...this.movesLog, 
+      {description:`${this.playerService.playerOne.name} won the game`,
+  board: [...this.board], lastMove: true}]
+    return
+  }
+  this.gameService.handleWinnerGame(GameStatus.SecondPlayerWin)
+  this.movesLog = [...this.movesLog, 
+    {description:`${this.playerService.playerTwo.name} won the game`,
+board: [...this.board], lastMove: true}]
+
+
+  return 
 }
+
+public populateLogs(playerName: string, row: number, index: number, symbol: Symbol){
+  let currentMove = playerName + " clicked on " + `[${row}][${index}]` + " the symbol " + symbol
+  let log={
+    description: currentMove,
+    board: [...this.board],
+    lastMove: true,
+  }
+    this.movesLog = [...this.movesLog, log]
+
+  if(this.movesLog.length > 1 ){
+    this.movesLog[this.movesLog.length - 2].lastMove = false;
+  }
+}
+
+
+public clickLog(index: number){
+  console.log(this.movesLog[index].board)
+  if(!this.movesLog[index].lastMove){
+    this.gameService.handleWinnerGame(GameStatus.Pause);
+    return
+  } 
+
+  this.gameService.handleWinnerGame(GameStatus.InProgres);
+}
+
 }

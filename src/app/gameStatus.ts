@@ -5,11 +5,11 @@ export enum Symbol{
 }
 
 export enum GameStatus {
-  NotStarted,
-  InProgres,
-  Draw,
-  FirstPlayerWin,
-  SecondPlayerWin,
-  PcWin,
-  Pause
+  NotStarted = "Not Started",
+  InProgres = "In Progress",
+  Draw = "Draw",
+  FirstPlayerWin = "First Player Wins",
+  SecondPlayerWin = "Second Player Wins",
+  PcWin = "Pc Win",
+  Pause = "Pause"
 }
