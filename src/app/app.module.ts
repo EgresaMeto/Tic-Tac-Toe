@@ -3,16 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { GameComponent } from './components/game/game.component';
+import{MatButtonModule} from '@angular/material/button';
+import { BoardComponent } from './components/board/board.component';
+import { PlayerCredentialsComponent } from './components/player-credentials/player-credentials.component';
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, GameComponent, BoardComponent, PlayerCredentialsComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatButtonModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

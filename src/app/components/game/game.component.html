@@ -1,0 +1,15 @@
+<div class="main-container" *ngIf="!gameService.startGame">
+  <h1>Tic-Tac-Toe</h1>
+
+  <div class="field">
+    <button  mat-raised-button  class="start-game-button" (click)="gameService.setPlayerNumber(true)"> 1 PLAYER</button>
+  </div>
+  <div class="field">
+    <button mat-raised-button  class="start-game-button" (click)="gameService.setPlayerNumber(false)"> 2 PLAYERS</button>
+  </div>
+  <app-player-credentials>
+  </app-player-credentials>
+  <div class="field">
+    <button mat-raised-button  class="start-game-button"  (click)="gameService.play()">START GAME NOW!</button>
+  </div>
+

@@ -1,0 +1,22 @@
+<div *ngIf="gameService.startGame" >
+  <div>
+    Player turn: {{gameService.firstPlayerTurn ? playerService.playerOne.name : !gameService.singlePlayer ? playerService.playerTwo.name : playerService.playerPc.name }}
+  </div>
+  <button (click)="boardService.resetGame()">Reset Game</button>
+  <div  class="game-container" >
+    <div class="text-red-500 w-full text-center">
+      {{playerService.playerOne.name}}
+    </div>
+  <div class="game-board w-full">
+    <div *ngFor="let square of boardService.board[0];let i =index"  class="square" (click)="boardService.clickCell(0,i)">{{square}}</div>
+  <div *ngFor="let square of boardService.board[1];let i =index"  class="square" (click)="boardService.clickCell(1,i)">{{square}}</div>
+  <div *ngFor="let square of boardService.board[2];let i =index"  class="square" (click)="boardService.clickCell(2,i)">{{square}}</div>
+    </div>
+    <div class="w-full text-center">
+      {{!gameService.singlePlayer ? playerService.playerTwo.name : playerService.playerPc.name}}
+    </div>
+    <div class="circle"></div>
+    <div class="circle1"></div>
+  </div>
+
+</div>
