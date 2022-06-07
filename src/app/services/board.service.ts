@@ -40,7 +40,7 @@ export class BoardService {
       this.checkBoardForWinner(this.board);
       return;
     }
-    
+
      if(this.board[row][index] === Symbol.EMPTY){
        this.board[row][index] = this.playerService.playerTwo.symbol;
        this.gameService.changePlayer();
@@ -103,18 +103,18 @@ debugger
   let winnerVal = winners.values().next().value;
   if(winnerVal === Symbol.CIRCLE){
     this.gameService.handleWinnerGame(GameStatus.FirstPlayerWin)
-    this.movesLog = [...this.movesLog, 
+    this.movesLog = [...this.movesLog,
       {description:`${this.playerService.playerOne.name} won the game`,
   board: [...this.board], lastMove: true}]
     return
   }
   this.gameService.handleWinnerGame(GameStatus.SecondPlayerWin)
-  this.movesLog = [...this.movesLog, 
+  this.movesLog = [...this.movesLog,
     {description:`${this.playerService.playerTwo.name} won the game`,
 board: [...this.board], lastMove: true}]
 
 
-  return 
+  return
 }
 
 public populateLogs(playerName: string, row: number, index: number, symbol: Symbol){
@@ -135,9 +135,10 @@ public populateLogs(playerName: string, row: number, index: number, symbol: Symb
 public clickLog(index: number){
   console.log(this.movesLog[index].board)
   if(!this.movesLog[index].lastMove){
+    
     this.gameService.handleWinnerGame(GameStatus.Pause);
     return
-  } 
+  }
 
   this.gameService.handleWinnerGame(GameStatus.InProgres);
 }
