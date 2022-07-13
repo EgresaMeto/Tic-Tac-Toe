@@ -7,7 +7,7 @@
   align-items: center;
 }
 .bg-board{
-  background-color: aqua;
+  background-color: rgb(195, 168, 213);
 
 }
 .game-board{
@@ -44,22 +44,6 @@
   backdrop-filter: blur(0.4rem);
 }
 
-.circle,.circle1{
-  width:10rem;
-  height: 10rem;
-  border-radius: 50%;
-  background:linear-gradient(to right bottom,rgba(255,255,255,0.8),
-  rgba(255,255,255,0.3));
-  position: absolute;
 
-}
 
-.circle{
-  bottom: 5%;
-  left: 10%;
-}
 
-.circle1{
-  top: 5%;
-  right: 10%;
-}

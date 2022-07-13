@@ -38,9 +38,9 @@ export class BoardService {
       this.gameService.changePlayer();
       this.populateLogs(this.playerService.playerOne.name, row, index, this.playerService.playerOne.symbol)
       this.checkBoardForWinner(this.board);
-      return;
+      return ;
     }
-    
+
      if(this.board[row][index] === Symbol.EMPTY){
        this.board[row][index] = this.playerService.playerTwo.symbol;
        this.gameService.changePlayer();
@@ -67,7 +67,7 @@ export class BoardService {
 
   public checkBoardForWinner(x: Symbol[][]) {
   let winners = new Set();
-debugger
+
   // columns check
   for (let i = 0; i < 3; i++) {
     if (x[0][i] !== Symbol.EMPTY && (new Set([x[0][i], x[1][i], x[2][i]])).size === 1) {
@@ -103,18 +103,18 @@ debugger
   let winnerVal = winners.values().next().value;
   if(winnerVal === Symbol.CIRCLE){
     this.gameService.handleWinnerGame(GameStatus.FirstPlayerWin)
-    this.movesLog = [...this.movesLog, 
+    this.movesLog = [...this.movesLog,
       {description:`${this.playerService.playerOne.name} won the game`,
   board: [...this.board], lastMove: true}]
     return
   }
   this.gameService.handleWinnerGame(GameStatus.SecondPlayerWin)
-  this.movesLog = [...this.movesLog, 
+  this.movesLog = [...this.movesLog,
     {description:`${this.playerService.playerTwo.name} won the game`,
 board: [...this.board], lastMove: true}]
 
 
-  return 
+  return
 }
 
 public populateLogs(playerName: string, row: number, index: number, symbol: Symbol){
@@ -137,9 +137,11 @@ public clickLog(index: number){
   if(!this.movesLog[index].lastMove){
     this.gameService.handleWinnerGame(GameStatus.Pause);
     return
-  } 
+  }
 
   this.gameService.handleWinnerGame(GameStatus.InProgres);
+
+
 }
 
 }

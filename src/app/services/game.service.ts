@@ -17,17 +17,21 @@ export class GameService {
 
   public play() {
     this.startGame = !this.startGame;
-    this.gameStatus = GameStatus.InProgres
+    this.gameStatus = GameStatus.InProgres;
   }
 
-  public changePlayer(){
+  public changePlayer() {
     this.firstPlayerTurn = !this.firstPlayerTurn;
   }
-  public setFirstPlayerTurn(value: boolean){
-    this.firstPlayerTurn = value
+  public setFirstPlayerTurn(value: boolean) {
+    this.firstPlayerTurn = value;
   }
 
   public handleWinnerGame(value: GameStatus) {
+    this.gameStatus = value;
+  }
+
+  public handleLosserGame(value: GameStatus) {
     this.gameStatus = value;
   }
 }
